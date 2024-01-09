@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentence Analyzer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#analyze-form').submit(function(event){
+                event.preventDefault();
+                var sentence = $('#sentence').val();
+                $.ajax({
+                    url: '/analyze',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({text: sentence}),
+                    success: function(response){
+                        $('#result').empty();
+                        response.forEach(function(word){
+                            $('#result').append('<p>' + word[0] + ': ' + word[1] + '</p>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Sentence Part-of-Speech Analyzer</h1>
+    <form id="analyze-form">
+        <input type="text" id="sentence" placeholder="Enter a sentence" required>
+        <input type="submit" value="Analyze">
+    </form>
+    <div id="result"></div>
+</body>
+</html>
