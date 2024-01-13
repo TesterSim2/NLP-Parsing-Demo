@@ -1,35 +1,33 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Sentence Analyzer</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('#analyze-form').submit(function(event){
-                event.preventDefault();
-                var sentence = $('#sentence').val();
-                $.ajax({
-                    url: '/analyze',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({text: sentence}),
-                    success: function(response){
-                        $('#result').empty();
-                        response.forEach(function(word){
-                            $('#result').append('<p>' + word[0] + ': ' + word[1] + '</p>');
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-</head>
-<body>
-    <h1>Sentence Part-of-Speech Analyzer</h1>
-    <form id="analyze-form">
-        <input type="text" id="sentence" placeholder="Enter a sentence" required>
-        <input type="submit" value="Analyze">
-    </form>
-    <div id="result"></div>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NLP Parsing Demo</title>
+    <link rel="stylesheet" href="style.css" />
+   <script src="https://unpkg.com/compromise"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sentence Parser</h1>
+      <textarea
+        id="inputText"
+        placeholder="Enter your sentence here..."
+      ></textarea>
+      <button id="parseButton">Parse Sentence</button>
+
+      <div class="output-section">
+        <h2>Syntax Analysis</h2>
+        <div id="syntaxOutput">Parsed syntax will appear here</div>
+      </div>
+
+      <div class="output-section">
+        <h2>Word Sense</h2>
+        <div id="wordSenseOutput">
+          Word sense disambiguation and NER results will appear here
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
